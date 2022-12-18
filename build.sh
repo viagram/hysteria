@@ -82,7 +82,7 @@ make_ldflags() {
     else
         ldflags="$ldflags -X 'main.appCommit=$(git rev-parse HEAD)'"
     fi
-    echo "$ldflags"
+    echo "-buildmode exe $ldflags"
 }
 
 build_for_platform() {
