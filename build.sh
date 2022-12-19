@@ -82,7 +82,7 @@ make_ldflags() {
     else
         ldflags="$ldflags -X 'main.appCommit=$(git rev-parse HEAD)'"
     fi
-    echo "-buildmode exe $ldflags"
+    echo "$ldflags"
 }
 
 build_for_platform() {
@@ -122,7 +122,7 @@ rm -rf build/*
 echo "Starting build..."
 
 for platform in "${platforms[@]}"; do
-    build_for_platform "$platform" "$ldflags"
+    build_for_platform "-buildmode exe $platform" "$ldflags"
 done
 
 echo "Build complete."
