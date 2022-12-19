@@ -102,7 +102,7 @@ build_for_platform() {
     fi
     local envs="$(platform_to_env "$GOOS" "$GOARCH")"
     local exit_val=0
-    env $envs go build -o "$output" -tags=gpl -ldflags "$ldflags" -trimpath ./app/cmd/ || exit_val=$?
+    env $envs go build -buildmode exe -o "$output" -tags=gpl -ldflags "$ldflags" -trimpath ./app/cmd/ || exit_val=$?
     if [[ "$exit_val" -ne 0 ]]; then
         echo "Error: failed to build $GOOS/$GOARCH" >&2
         return $exit_val
@@ -122,7 +122,7 @@ rm -rf build/*
 echo "Starting build..."
 
 for platform in "${platforms[@]}"; do
-    build_for_platform "-buildmode exe $platform" "$ldflags"
+    build_for_platform "$platform" "$ldflags"
 done
 
 echo "Build complete."
